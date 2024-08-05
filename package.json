@@ -1,0 +1,26 @@
+{
+  "name": "pft",
+  "displayName": "Irbis",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "icon": "Irbis.gif",
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "irbis",
+      "aliases": ["Irbis", "irbis"],
+      "extensions": [".pft"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "irbis",
+      "scopeName": "source.irbis",
+      "path": "./syntaxes/irbis.tmLanguage.json"
+    }]
+  }
+}
