@@ -1,6 +1,6 @@
-# pft README
+# README
 
-This is the README for your extension "pft". After writing up a brief description, we recommend including the following sections.
+Дополнение для VSCode для внутреннего языка разметки Ирбис64.
 
 ## Features
 
