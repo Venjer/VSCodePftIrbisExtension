@@ -5,7 +5,8 @@
     },
     // symbols used as brackets
     "brackets": [
-        ["(", ")"]
+        ["(", ")"],
+        ["if", "fi"]
     ],
     // symbols that are auto closed when typing
     "autoClosingPairs": [
@@ -19,6 +20,6 @@
         ["|", "|"],
         ["(", ")"],
         ["\"", "\""],
-        ["'", "'"]
+        ["'", "'"],
     ]
 }

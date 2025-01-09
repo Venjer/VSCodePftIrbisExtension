@@ -1,7 +1,12 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Irbis",
+	"name": "irbis",
+	"scopeName": "source.irbis",
 	"patterns": [
+		{
+			"name": "comment.line.number-sign.irbis",
+			"match": "/\\*.*$"
+		  },
 		{
 			"include": "#keywords"
 		},
@@ -13,7 +18,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.irbis",
-				"match": "\\b(if|then|else|fi|return|&unifor|&uf)\\b"
+				"match": "(if|then|else|fi|return|&unifor|&uf)"
 			}]
 		},
 		"strings": {
@@ -27,6 +32,6 @@
 				}
 			]
 		}
-	},
-	"scopeName": "source.irbis"
+	}
+
 }

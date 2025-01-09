@@ -2,7 +2,7 @@
   "name": "pft",
   "displayName": "Irbis",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -10,17 +10,38 @@
   "categories": [
     "Programming Languages"
   ],
+  "main": "./src/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "test": "node ./out/test/runTest.js"
+  },
   "contributes": {
-    "languages": [{
-      "id": "irbis",
-      "aliases": ["Irbis", "irbis"],
-      "extensions": [".pft"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "irbis",
-      "scopeName": "source.irbis",
-      "path": "./syntaxes/irbis.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "irbis",
+        "aliases": [
+          "Irbis",
+          "irbis"
+        ],
+        "extensions": [
+          ".pft"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "irbis",
+        "scopeName": "source.irbis",
+        "path": "./syntaxes/irbis.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.96.0",
+    "typescript": "^5.7.2"
   }
 }

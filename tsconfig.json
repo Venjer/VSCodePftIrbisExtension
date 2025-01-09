@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "lib": ["es2015"],
+      "types": ["node", "vscode"],  // Include the VS Code types
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+      "src/**/*.ts"  // Include all TypeScript files in the src folder
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
