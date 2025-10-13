@@ -1,65 +1,115 @@
-# pft README
+# Irbis Language Support
 
-This is the README for your extension "pft". After writing up a brief description, we recommend including the following sections.
+Расширение Visual Studio Code для поддержки языка IRBIS PFT (Print Format Table) с подсветкой синтаксиса, автодополнением и форматированием кода.
 
-## Features
+## Описание
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+IRBIS PFT - это язык форматирования данных, используемый в библиотечной информационной системе IRBIS. Данное расширение обеспечивает полную поддержку разработки PFT-скриптов в Visual Studio Code.
 
-For example if there is an image subfolder under your extension project workspace:
+## Функции
 
-\!\[feature X\]\(images/feature-x.png\)
+- 🎨 **Подсветка синтаксиса** для файлов `.pft`
+- ✨ **Автодополнение** встроенных функций с подсказками
+- 📝 **Всплывающие подсказки** при наведении на функции
+- 🔧 **Форматирование кода** для улучшения читаемости
+- 📚 **Поддержка всех основных функций IRBIS**
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Поддерживаемые функции
 
-## Requirements
+Расширение включает автодополнение для следующих функций:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Работа со строками
+- `uf('+95')` - Вернуть длину исходной строки
+- `uf('+96')` - Вернуть часть строки
+- `uf('+97')` - Вернуть заданную строку в верхнем регистре
+- `uf('+98')` - Заменить в заданной строке один символ на другой
+- `uf('Q')` - Вернуть заданную строку в нижнем регистре
 
-## Extension Settings
+### Работа с данными
+- `uf('3')` - Выдача данных, связанных с датой и временем
+- `uf('A')` - Выдать заданное повторение поля
+- `uf('I')` - Вернуть параметр из INI-файла
+- `uf('+N')` - Выдать количество повторений поля
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### Глобальные переменные
+- `uf('+7')` - Очистить все глобальные переменные
+- `uf('+7R')` - Чтение глобальной переменной
+- `uf('+7W')` - Запись глобальной переменной
+- `uf('+7U')` - Добавление повторений глобальной переменной
+- `uf('+7T')` - Сортировка повторений переменной
 
-For example:
+## Установка
 
-This extension contributes the following settings:
+1. Откройте Visual Studio Code
+2. Перейдите в раздел расширений (Ctrl+Shift+X)
+3. Найдите "Irbis Language Support"
+4. Нажмите "Установить"
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Альтернативная установка из VSIX
 
-## Known Issues
+1. Скачайте файл `.vsix`
+2. Откройте VS Code
+3. Нажмите Ctrl+Shift+P
+4. Введите "Extensions: Install from VSIX"
+5. Выберите скачанный файл
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Использование
 
-## Release Notes
+1. Создайте файл с расширением `.pft`
+2. Начните вводить код - автодополнение активируется автоматически
+3. Наведите курсор на функцию для просмотра документации
+4. Используйте Ctrl+Shift+I для форматирования кода
 
-Users appreciate release notes as you update your extension.
+### Пример кода
 
-### 1.0.0
+```pft
+&uf('+95'v200^a)
+if &uf('+95'v200^a) > 0 then
+    &uf('+97'v200^a)
+else
+    'Заголовок отсутствует'
+fi
+```
 
-Initial release of ...
+## Требования
 
-### 1.0.1
+- Visual Studio Code версии 1.96.0 или выше
+- Нет дополнительных зависимостей
 
-Fixed issue #.
+## Конфигурация
 
-### 1.1.0
+В настоящее время расширение не требует дополнительной настройки и работает "из коробки".
 
-Added features X, Y, and Z.
+## Известные проблемы
+
+- Пока не поддерживается автодополнение пользовательских функций
+- Форматирование сложных вложенных конструкций может быть неточным
+
+## История версий
+
+### 0.0.3 (Текущая версия)
+- Добавлена поддержка hover-подсказок
+- Улучшено автодополнение функций
+- Добавлены snippet'ы для часто используемых функций
+- Исправлены ошибки в подсветке синтаксиса
+
+### 0.0.2
+- Добавлено автодополнение встроенных функций
+- Улучшена подсветка синтаксиса
+- Добавлено форматирование кода
+
+### 0.0.1
+- Первоначальный релиз
+- Базовая подсветка синтаксиса для .pft файлов
+
+## Обратная связь
+
+Если у вас есть предложения по улучшению или вы нашли ошибку, пожалуйста, создайте issue в репозитории проекта.
+
+## Лицензия
+
+Данное расширение распространяется под лицензией MIT.
 
 ---
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Приятного использования!** 🚀

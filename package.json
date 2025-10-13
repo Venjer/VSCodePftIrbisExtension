@@ -1,10 +1,15 @@
 {
   "name": "pft",
   "displayName": "Irbis",
-  "description": "",
+  "description": "VS Code extension for Irbis PFT language with syntax highlighting, autocompletion, and formatting support",
   "version": "0.0.3",
+  "publisher": "Venjer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Venjer/VSCodePftIrbisExtension.git"
+  },
   "engines": {
-    "vscode": "^1.92.0"
+    "vscode": "^1.96.0"
   },
   "icon": "Irbis.gif",
   "categories": [
