@@ -4,14 +4,17 @@
       "module": "commonjs",
       "moduleResolution": "node",
       "lib": ["es2015"],
-      "types": ["node", "vscode"],  // Include the VS Code types
+      "types": ["node", "vscode", "mocha"],
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "out",
+      "rootDir": "src",
+      "sourceMap": true
     },
     "include": [
-      "src/**/*.ts"  // Include all TypeScript files in the src folder
+      "src/**/*.ts"
     ],
     "exclude": [
       "node_modules"

@@ -4,34 +4,144 @@
 	"scopeName": "source.irbis",
 	"patterns": [
 		{
-			"name": "comment.line.number-sign.irbis",
+			"name": "comment.line.slash-asterisk.irbis",
 			"match": "/\\*.*$"
-		  },
+		},
+		{
+			"include": "#unifor-functions"
+		},
+		{
+			"include": "#builtin-functions"
+		},
+		{
+			"include": "#presence-tests"
+		},
+		{
+			"include": "#includes"
+		},
+		{
+			"include": "#field-references"
+		},
 		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#operators"
 		}
 	],
 	"repository": {
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.irbis",
-				"match": "(if|then|else|fi|return|&unifor|&uf)"
+				"match": "(?i)\\b(if|then|else|fi|and|or|not|break)\\b"
 			}]
 		},
-		"strings": {
-			"name": "string.quoted.double.irbis",
-			"begin": "\"",
-			"end": "\"",
+		"builtin-functions": {
+			"patterns": [{
+				"name": "support.function.builtin.irbis",
+				"match": "(?i)&(s|val|f|rsum|rmax|rmin|ravr|l|ref)\\s*\\("
+			}]
+		},
+		"presence-tests": {
+			"patterns": [{
+				"name": "support.function.presence.irbis",
+				"match": "(?i)\\b(p|a)\\s*\\("
+			}]
+		},
+		"unifor-functions": {
 			"patterns": [
 				{
-					"name": "constant.character.escape.irbis",
-					"match": "\\\\."
+					"name": "support.function.unifor.irbis",
+					"match": "(?i)&(unifor|uf)\\s*\\("
+				},
+				{
+					"name": "string.quoted.single.unifor-code.irbis",
+					"begin": "((?i)&(unifor|uf)\\s*\\(\\s*['\"])",
+					"end": "(['\"]\\s*\\))",
+					"beginCaptures": {
+						"1": {"name": "support.function.unifor.irbis"}
+					},
+					"endCaptures": {
+						"1": {"name": "support.function.unifor.irbis"}
+					},
+					"patterns": [
+						{
+							"name": "constant.other.unifor-prefix.irbis",
+							"match": "\\+?[0-9A-Z]+"
+						}
+					]
+				}
+			]
+		},
+		"includes": {
+			"patterns": [{
+				"name": "keyword.control.import.irbis",
+				"match": "@[A-Za-z0-9_.!-]+"
+			}]
+		},
+		"field-references": {
+			"patterns": [
+				{
+					"name": "variable.other.field.irbis",
+					"match": "(?i)[vdn][0-9]{1,4}(\\^[a-z0-9])?(\\*\\d+)?(\\.\\d+)?"
+				},
+				{
+					"name": "variable.other.global.irbis",
+					"match": "(?i)g[0-9]{1,3}"
+				}
+			]
+		},
+		"strings": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.irbis",
+					"begin": "\"",
+					"end": "\"",
+					"patterns": [
+						{
+							"name": "constant.character.escape.irbis",
+							"match": "\\\\."
+						}
+					]
+				},
+				{
+					"name": "string.quoted.single.irbis",
+					"begin": "'",
+					"end": "'",
+					"patterns": [
+						{
+							"name": "constant.character.escape.irbis",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.irbis",
+					"match": "\\b\\d+(\\.\\d+)?\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.irbis",
+					"match": "(\\+|\\-|\\*|\\/|\\=|\\<|\\>|\\&|\\||\\!)"
+				},
+				{
+					"name": "punctuation.separator.irbis",
+					"match": "(\\,|\\;|\\:)"
 				}
 			]
 		}
 	}
-
 }

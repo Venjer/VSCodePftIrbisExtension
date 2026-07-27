@@ -1,26 +1,50 @@
 {
   "name": "pft",
   "displayName": "Irbis",
-  "description": "VS Code extension for Irbis PFT language with syntax highlighting, autocompletion, and formatting support",
-  "version": "0.0.3",
+  "description": "Полная поддержка языка IRBIS PFT с библиотекой функций UNIFOR, автодополнением и интеллектуальными подсказками",
+  "version": "0.1.0",
   "publisher": "Venjer",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Venjer/VSCodePftIrbisExtension.git"
   },
+  "bugs": {
+    "url": "https://github.com/Venjer/VSCodePftIrbisExtension/issues"
+  },
+  "homepage": "https://github.com/Venjer/VSCodePftIrbisExtension#readme",
   "engines": {
     "vscode": "^1.96.0"
   },
-  "icon": "Irbis.gif",
-  "categories": [
-    "Programming Languages"
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "keywords": [
+    "irbis",
+    "pft",
+    "unifor",
+    "rusmarc",
+    "marc",
+    "ирбис",
+    "библиотека",
+    "каталогизация"
   ],
-  "main": "./src/extension.js",
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Linters",
+    "Snippets"
+  ],
+  "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -w -p ./",
-    "test": "node ./out/test/runTest.js"
+    "pretest": "npm run compile",
+    "test": "mocha \"out/test/**/*.test.js\"",
+    "package": "vsce package"
   },
   "contributes": {
     "languages": [
@@ -42,11 +66,39 @@
         "scopeName": "source.irbis",
         "path": "./syntaxes/irbis.tmLanguage.json"
       }
+    ],
+    "snippets": [
+      {
+        "language": "irbis",
+        "path": "./snippets/irbis.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "irbis.showUniforByCategory",
+        "title": "Показать функции UNIFOR по категориям",
+        "category": "IRBIS"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "irbis.showUniforByCategory",
+        "key": "ctrl+shift+u",
+        "when": "editorTextFocus && editorLangId == irbis"
+      },
+      {
+        "command": "editor.action.formatDocument",
+        "key": "ctrl+shift+i",
+        "when": "editorTextFocus && editorLangId == irbis"
+      }
     ]
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.2",
     "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^3.2.1",
+    "mocha": "^11.0.1",
     "typescript": "^5.7.2"
   }
 }
