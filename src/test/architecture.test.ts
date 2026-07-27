@@ -36,6 +36,8 @@ describe('архитектурные границы', () => {
     const compiled = path.join(projectRoot, 'out', 'domain', 'catalog', 'unifor.js');
     assert.ok(fs.existsSync(compiled), `не найден ${compiled} — запустите npm run compile`);
     delete require.cache[require.resolve(compiled)];
+    // Путь вычисляется в рантайме, поэтому нужен require, а не статический import.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     assert.doesNotThrow(() => require(compiled));
   });
 });

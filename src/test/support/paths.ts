@@ -20,5 +20,7 @@ export function fixture(name: string): string {
 }
 
 export function readFixture(name: string): string {
-  return fs.readFileSync(fixture(name), 'utf8');
+  const bytes = fs.readFileSync(fixture(name));
+  const encoding = name.endsWith('.pft') ? 'windows-1251' : 'utf-8';
+  return new TextDecoder(encoding).decode(bytes);
 }

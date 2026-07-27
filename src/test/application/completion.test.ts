@@ -22,12 +22,12 @@ describe('suggestCompletions', () => {
   it('в контексте unifor возвращает только функции UNIFOR', () => {
     const items = suggestCompletions("&uf(");
     assert.ok(items.length > 0);
-    assert.ok(items.every(item => item.kind === 'function'));
+    assert.ok(items.every(item => item.label.startsWith('uf(')));
   });
 
-  it('в общем контексте включает и функции, и поля', () => {
+  it('в общем контексте включает и функции UNIFOR, и встроенные функции', () => {
     const items = suggestCompletions('');
-    assert.ok(items.some(item => item.kind === 'variable'));
-    assert.ok(items.some(item => item.kind === 'function'));
+    assert.ok(items.some(item => item.label.startsWith('uf(')));
+    assert.ok(items.some(item => item.label === 'val'));
   });
 });

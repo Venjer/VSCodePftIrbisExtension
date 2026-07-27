@@ -3,10 +3,7 @@ import { CompletionSuggestion, HoverInfo } from '../../application/types';
 import { PftProblem } from '../../domain/diagnostics/analyzer';
 
 export function toCompletionItem(suggestion: CompletionSuggestion): vscode.CompletionItem {
-  const kind = suggestion.kind === 'variable'
-    ? vscode.CompletionItemKind.Variable
-    : vscode.CompletionItemKind.Function;
-  const item = new vscode.CompletionItem(suggestion.label, kind);
+  const item = new vscode.CompletionItem(suggestion.label, vscode.CompletionItemKind.Function);
   item.detail = suggestion.detail;
   item.documentation = new vscode.MarkdownString(suggestion.documentation);
   item.insertText = toSnippetString(suggestion.snippet);

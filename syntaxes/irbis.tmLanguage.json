@@ -45,7 +45,7 @@
 		"builtin-functions": {
 			"patterns": [{
 				"name": "support.function.builtin.irbis",
-				"match": "(?i)&(s|val|f|rsum|rmax|rmin|ravr|l|ref)\\s*\\("
+				"match": "(?i)&?\\b(s|val|f|rsum|rmax|rmin|ravr|l|ref)\\b\\s*\\("
 			}]
 		},
 		"presence-tests": {
@@ -100,26 +100,18 @@
 		"strings": {
 			"patterns": [
 				{
+					"name": "string.quoted.other.repeating.irbis",
+					"match": "\\|[^|\\r\\n]*\\|\\+?"
+				},
+				{
 					"name": "string.quoted.double.irbis",
 					"begin": "\"",
-					"end": "\"",
-					"patterns": [
-						{
-							"name": "constant.character.escape.irbis",
-							"match": "\\\\."
-						}
-					]
+					"end": "\"|$"
 				},
 				{
 					"name": "string.quoted.single.irbis",
 					"begin": "'",
-					"end": "'",
-					"patterns": [
-						{
-							"name": "constant.character.escape.irbis",
-							"match": "\\\\."
-						}
-					]
+					"end": "'|$"
 				}
 			]
 		},

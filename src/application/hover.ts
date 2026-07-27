@@ -1,12 +1,18 @@
 import { UNIFOR_FUNCTIONS } from '../domain/catalog/unifor';
 import { findBuiltin } from '../domain/catalog/builtins';
-import { findField, findSubfield } from '../domain/catalog/marcFields';
-import { wordRangeAt } from './textRange';
+import { findPresenceTest } from '../domain/catalog/presenceTests';
+import { findKeywordHover } from '../domain/catalog/keywords';
+import { findOperatorHover } from '../domain/catalog/operators';
+import { findFieldPrefixHover } from '../domain/catalog/fieldPrefixes';
+import { matchAt, wordRangeAt } from './textRange';
 import { HoverInfo } from './types';
 
 const UNIFOR_CALL_PATTERN = /&(unifor|uf)\s*\(\s*'[^']*'/i;
-const BUILTIN_CALL_PATTERN = /&[a-z]+\s*\(/i;
-const FIELD_REFERENCE_PATTERN = /[vdn]\d{1,4}(\^[a-zA-Z0-9])?/i;
+const BUILTIN_CALL_PATTERN = /&?[a-z]+\s*\(/i;
+const PRESENCE_CALL_PATTERN = /\b[pa]\s*\(/i;
+const KEYWORD_PATTERN = /\b(if|then|else|fi|and|or|not|break)\b/i;
+const OPERATOR_PATTERN = /<>|<=|>=|[=<>:]/;
+const FIELD_PREFIX_PATTERN = /\b([vdng])(\d{1,4})(\^\S)?(\*\d+)?(\.\d+)?/i;
 
 function uniforHover(word: string): HoverInfo | undefined {
   // Метки библиотеки записаны в короткой форме uf(, поэтому длинную приводим к ней.
@@ -40,27 +46,68 @@ function builtinHover(call: string): HoverInfo | undefined {
   };
 }
 
-function fieldHover(word: string): HoverInfo | undefined {
-  const match = /^[vdn](\d{1,4})(?:\^([a-zA-Z0-9]))?$/i.exec(word);
-  if (!match) {
+function presenceHover(call: string): HoverInfo | undefined {
+  const name = call.replace(/\s*\($/, '');
+  const func = findPresenceTest(name);
+  if (!func) {
     return undefined;
-  }
-
-  const field = findField(match[1]);
-  if (!field) {
-    return undefined;
-  }
-
-  let body = field.description;
-  if (match[2]) {
-    const subfield = findSubfield(match[1], match[2]);
-    body += `\n\n**Подполе ^${match[2]}**: ${subfield ?? 'описание отсутствует'}`;
   }
 
   return {
-    code: word,
-    title: `Поле ${field.number}. ${field.name}`,
-    body
+    code: `${func.label}(...)`,
+    title: func.detail,
+    body: func.documentation
+  };
+}
+
+function keywordHover(word: string): HoverInfo | undefined {
+  const func = findKeywordHover(word);
+  if (!func) {
+    return undefined;
+  }
+
+  return {
+    code: func.label,
+    title: func.detail,
+    body: func.documentation
+  };
+}
+
+function operatorHover(symbol: string): HoverInfo | undefined {
+  const func = findOperatorHover(symbol);
+  if (!func) {
+    return undefined;
+  }
+
+  return {
+    code: func.label,
+    title: func.detail,
+    body: func.documentation
+  };
+}
+
+function fieldPrefixHover(match: RegExpExecArray): HoverInfo | undefined {
+  const [full, prefix, , sub, offset, length] = match;
+  const func = findFieldPrefixHover(prefix);
+  if (!func) {
+    return undefined;
+  }
+
+  const parts = [func.documentation];
+  if (sub) {
+    parts.push(`\`${sub}\` — подполе ${sub.slice(1)}.`);
+  }
+  if (offset) {
+    parts.push(`\`${offset}\` — смещение: пропустить первые ${offset.slice(1)} символов.`);
+  }
+  if (length) {
+    parts.push(`\`${length}\` — длина: взять ${length.slice(1)} символов после смещения.`);
+  }
+
+  return {
+    code: full,
+    title: func.detail,
+    body: parts.join('\n\n')
   };
 }
 
@@ -81,9 +128,33 @@ export function resolveHover(lineText: string, character: number): HoverInfo | u
     }
   }
 
-  const fieldMatch = wordRangeAt(lineText, character, FIELD_REFERENCE_PATTERN);
-  if (fieldMatch) {
-    return fieldHover(fieldMatch);
+  const presenceMatch = wordRangeAt(lineText, character, PRESENCE_CALL_PATTERN);
+  if (presenceMatch) {
+    const hover = presenceHover(presenceMatch);
+    if (hover) {
+      return hover;
+    }
+  }
+
+  const keywordMatch = wordRangeAt(lineText, character, KEYWORD_PATTERN);
+  if (keywordMatch) {
+    const hover = keywordHover(keywordMatch);
+    if (hover) {
+      return hover;
+    }
+  }
+
+  const operatorMatch = wordRangeAt(lineText, character, OPERATOR_PATTERN);
+  if (operatorMatch) {
+    const hover = operatorHover(operatorMatch);
+    if (hover) {
+      return hover;
+    }
+  }
+
+  const fieldPrefixMatch = matchAt(lineText, character, FIELD_PREFIX_PATTERN);
+  if (fieldPrefixMatch) {
+    return fieldPrefixHover(fieldPrefixMatch);
   }
 
   return undefined;

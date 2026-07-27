@@ -1,8 +1,5 @@
-export type CompletionKind = 'function' | 'variable';
-
 export interface CompletionSuggestion {
   label: string;
-  kind: CompletionKind;
   detail: string;
   documentation: string;
   snippet: string;

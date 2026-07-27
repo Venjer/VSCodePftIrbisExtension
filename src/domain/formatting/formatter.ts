@@ -2,7 +2,8 @@ import { Token, tokenize } from '../language/tokenizer';
 
 // Переставляет только отступы: содержимое строк, литералов и комментариев
 // не изменяется. Глубину задают конструкции if/fi и группы в скобках.
-export function formatText(text: string, indentUnit: string): string {
+export function formatText(text: string, indentUnit: string, eol?: string): string {
+  const lineSeparator = eol ?? (text.includes('\r\n') ? '\r\n' : '\n');
   const tokens = tokenize(text);
   const lines = text.split('\n');
   const lineStarts = buildLineStarts(lines);
@@ -27,7 +28,7 @@ export function formatText(text: string, indentUnit: string): string {
     depth = Math.max(0, depth + netDepthChange(lineTokens));
   }
 
-  return result.join('\n');
+  return result.join(lineSeparator);
 }
 
 function buildLineStarts(lines: string[]): number[] {

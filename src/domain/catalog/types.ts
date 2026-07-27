@@ -23,3 +23,9 @@ export interface UniforFunction extends CatalogEntry {
 }
 
 export type BuiltinFunction = CatalogEntry;
+
+export interface HoverEntry {
+  label: string;
+  detail: string;
+  documentation: string;
+}

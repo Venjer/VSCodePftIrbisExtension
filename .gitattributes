@@ -1,2 +1,3 @@
 # Set default behavior to automatically normalize line endings.
 * text=auto
+*.pft text working-tree-encoding=windows-1251 eol=crlf

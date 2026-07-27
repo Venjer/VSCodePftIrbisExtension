@@ -25,4 +25,19 @@ describe('formatText', () => {
   it('сохраняет пустые строки', () => {
     assert.strictEqual(formatText('v200\n\nv700', '  '), 'v200\n\nv700');
   });
+
+  it('без явного eol сохраняет CRLF исходного текста', () => {
+    const source = 'if p(v200) then\r\nv200^a\r\nfi';
+    assert.strictEqual(formatText(source, '  '), 'if p(v200) then\r\n  v200^a\r\nfi');
+  });
+
+  it('без явного eol сохраняет LF исходного текста', () => {
+    const source = 'if p(v200) then\nv200^a\nfi';
+    assert.strictEqual(formatText(source, '  '), 'if p(v200) then\n  v200^a\nfi');
+  });
+
+  it('явный eol переопределяет перевод строк LF-текста на CRLF', () => {
+    const source = 'if p(v200) then\nv200^a\nfi';
+    assert.strictEqual(formatText(source, '  ', '\r\n'), 'if p(v200) then\r\n  v200^a\r\nfi');
+  });
 });

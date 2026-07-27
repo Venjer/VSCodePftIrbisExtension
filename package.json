@@ -2,7 +2,7 @@
   "name": "irbis-pft",
   "displayName": "Irbis Language Support",
   "description": "Полная поддержка языка IRBIS PFT с библиотекой функций UNIFOR, автодополнением и интеллектуальными подсказками",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "publisher": "Venjer",
   "license": "MIT",
   "repository": {
@@ -44,6 +44,7 @@
     "watch": "tsc -w -p ./",
     "pretest": "npm run compile",
     "test": "mocha \"out/test/**/*.test.js\"",
+    "lint": "eslint src",
     "package": "vsce package"
   },
   "contributes": {
@@ -58,6 +59,21 @@
           ".pft"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "irbis-data",
+        "aliases": [
+          "Irbis Data"
+        ],
+        "extensions": [
+          ".fst",
+          ".mnu",
+          ".par",
+          ".wss",
+          ".stw",
+          ".ws",
+          ".gbl"
+        ]
       }
     ],
     "grammars": [
@@ -91,14 +107,26 @@
         "key": "ctrl+shift+i",
         "when": "editorTextFocus && editorLangId == irbis"
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "[irbis]": {
+        "files.encoding": "windows1251",
+        "files.autoGuessEncoding": false
+      },
+      "[irbis-data]": {
+        "files.encoding": "windows1251",
+        "files.autoGuessEncoding": false
+      }
+    }
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.2",
     "@types/vscode": "^1.96.0",
     "@vscode/vsce": "^3.2.1",
+    "eslint": "^9.17.0",
     "mocha": "^11.0.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1"
   }
 }

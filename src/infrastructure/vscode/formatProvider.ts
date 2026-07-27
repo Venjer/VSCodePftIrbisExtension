@@ -8,7 +8,8 @@ export class FormatProvider implements vscode.DocumentFormattingEditProvider {
   ): vscode.TextEdit[] {
     const text = document.getText();
     const indentUnit = options.insertSpaces ? ' '.repeat(options.tabSize) : '\t';
-    const formatted = formatText(text, indentUnit);
+    const eol = document.eol === vscode.EndOfLine.CRLF ? '\r\n' : '\n';
+    const formatted = formatText(text, indentUnit, eol);
 
     if (text === formatted) {
       return [];
