@@ -1,6 +1,6 @@
 {
-  "name": "pft",
-  "displayName": "Irbis",
+  "name": "irbis-pft",
+  "displayName": "Irbis Language Support",
   "description": "Полная поддержка языка IRBIS PFT с библиотекой функций UNIFOR, автодополнением и интеллектуальными подсказками",
   "version": "0.1.0",
   "publisher": "Venjer",
