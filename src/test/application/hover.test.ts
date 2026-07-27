@@ -56,6 +56,16 @@ describe('resolveHover', () => {
     assert.strictEqual(fHover!.title, 'Форматирование числа');
   });
 
+  it('code в hover для builtin-функции отражает фактическое написание', () => {
+    const withAmp = resolveHover('&val(v200)', 1);
+    assert.ok(withAmp);
+    assert.strictEqual(withAmp!.code, '&val(...)');
+
+    const bare = resolveHover('val(v200)', 0);
+    assert.ok(bare);
+    assert.strictEqual(bare!.code, 'val(...)');
+  });
+
   it('не даёт hover для слова, случайно содержащего keyword-подстроку', () => {
     assert.strictEqual(resolveHover('fifty', 2), undefined);
   });

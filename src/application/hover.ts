@@ -33,6 +33,7 @@ function uniforHover(word: string): HoverInfo | undefined {
 }
 
 function builtinHover(call: string): HoverInfo | undefined {
+  const hasAmpersand = call.startsWith('&');
   const name = call.replace(/^&/, '').replace(/\s*\($/, '');
   const func = findBuiltin(name);
   if (!func) {
@@ -40,7 +41,7 @@ function builtinHover(call: string): HoverInfo | undefined {
   }
 
   return {
-    code: `&${func.label}(...)`,
+    code: `${hasAmpersand ? '&' : ''}${func.label}(...)`,
     title: func.detail,
     body: func.documentation
   };
